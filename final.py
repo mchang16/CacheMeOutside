@@ -62,19 +62,16 @@ class FlowerStuff(tk.Tk):
         frame.grid(row=0, column=0, sticky="nsew")
         
     def loadUpdate3(self):
-        print('update3 called')
         frame = Update3(container, self)
         self.frames[Update3] = frame
         frame.grid(row=0, column=0, sticky="nsew")
 
     def loadUpdate4(self):
-        print('update4')
         frame = Update4(container, self)
         self.frames[Update4] = frame
         frame.grid(row=0, column=0, sticky="nsew")
 
     def loadUpdate5(self):
-        print('update5')
         frame = Update5(container, self)
         self.frames[Update5] = frame
         frame.grid(row=0, column=0, sticky="nsew")
@@ -106,11 +103,11 @@ class StartPage(tk.Frame):
         button3 = ttk.Button(self, text="Update",
             command=lambda: myLambda(PageThree))
         button3.pack()
-
+        button4 = ttk. Button(self, text="Save Changes", 
+            command=  conn.commit())
+        button4.pack()
         def myLambda(page2show):
-            print("\n\n\n\n\n\n")
-            print(page2show)
-            print("\n\n\n\n\n\n")
+            
             
             app.loadFrames()
             controller.show_frame(page2show)
@@ -140,6 +137,7 @@ class PageOne(tk.Frame):
         button3 = ttk.Button(self, text="Submit",
                         command=lambda: myLambda(self.query.get()))
         button3.pack()
+        
 
         def myLambda(strnaaa):
             global flowername
@@ -295,7 +293,6 @@ class PageThree(tk.Frame):
         button3.pack()
 
         def myLambda(strnaaa):
-            print("on page 2")
             global updflower
             updflower = strnaaa
             app.loadUpdate2()
@@ -345,8 +342,7 @@ class Update3(tk.Frame):
         
         self.query = StringVar()
         Entry(self, textvariable=self.query).pack()
-        button3 = ttk.Button(self, text="Submit",
-                        command=lambda: myLambda(self.query.get()))
+        button3 = ttk.Button(self, text="Submit",  command=lambda: myLambda(self.query.get()))
         button3.pack()
 
         def myLambda(strnaaa):
