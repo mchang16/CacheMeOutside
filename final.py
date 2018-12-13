@@ -1,3 +1,5 @@
+#sql injection 
+#alpine columbine'; DROP TABLE SIGHTINGS;
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
@@ -6,6 +8,11 @@ conn = sqlite3.connect('flowers.db')
 c = conn.cursor()
 
 
+
+
+# this code is very hard to read and for that I apologize. The idea behind this is every new page is a 'frame' and every time I press 
+# a button I am just displaying a new frame. originally a result of this was that the frames were static and didn't update afer
+# insert or update so i made sure that the frames refreshed every time.
 
 LARGE_FONT= ("Verdana", 12,)
 mglobalvar = ''
@@ -103,12 +110,35 @@ class StartPage(tk.Frame):
         button3 = ttk.Button(self, text="Update",
             command=lambda: myLambda(PageThree))
         button3.pack()
+        button5 = ttk. Button(self, text="Make indecies on sightings", 
+            command =lambda: makeIndex())
+        button5.pack()
+
+        button5 = ttk. Button(self, text="Drop indecies", 
+            command =lambda: dropIndex())
+        button5.pack()
         button4 = ttk. Button(self, text="Save Changes", 
-            command=  conn.commit())
+            command =lambda: saveLambda())
         button4.pack()
+
+        def makeIndex():
+            c.execute('CREATE INDEX NAMEINDEX ON SIGHTINGS(NAME)')
+            c.execute('CREATE INDEX PERSONINDEX ON SIGHTINGS(PERSON)')
+            c.execute('CREATE INDEX LOCATIONINDEX ON SIGHTINGS(LOCATION)')
+            c.execute('CREATE INDEX SIGHTEDINDEX ON SIGHTINGS(SIGHTED)')
+
+        def dropIndex():
+            c.execute('DROP INDEX NAMEINDEX')
+            c.execute('DROP INDEX PERSONINDEX')
+            c.execute('DROP INDEX LOCATIONINDEX')
+            c.execute('DROP INDEX SIGHTEDINDEX')
+
+        def saveLambda():
+            conn.commit() #for some reason it was committing all the time without doing this. I suppose I don't exactly understand lambda functions very well as of right now
+            print("just commited")
+
         def myLambda(page2show):
-            
-            
+           
             app.loadFrames()
             controller.show_frame(page2show)
             
